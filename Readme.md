@@ -39,7 +39,7 @@ If any changes to Mex files are made these must be recomplied using:
 ### CMAES and MCMC Results
 To find the best fit to the sine wave experimental data we first run [FullGlobalSearch.m](Code/FullGlobalSearch.m) for each cell and then once we've verified that the CMA-ES algorithm repeatedly returns parameters in the same region of parameter space on multiple different iterations we then run [AdaptiveMCMCStartingBestCMAES.m](Code/AdaptiveMCMCStartingBestCMAES.m) to determine MCMC chains. 
 
-[cmaes.m](Code/cmaes.m) defines the CMA-ES algorithm used for the initial search of the parameter space before running MCMC.
+[cmaes.m](Code/cmaes.m) defines the CMA-ES algorithm used for the initial search of the parameter space before running MCMC. This file was downloaded from https://www.lri.fr/~hansen/cmaes_inmatlab.html
 
 [FullGlobalSearch.m](Code/FullGlobalSearch.m) is run to search the parameter space and identify the best guess parameter set to be used to initialise the MCMC chain.
 
