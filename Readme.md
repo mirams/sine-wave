@@ -47,7 +47,7 @@ You should set up the below programs before attempting to run our code.
  * For plotting: [matplotlib v1.5.3](http://matplotlib.org/1.5.3/index.html) and [seaborn v0.7.1](http://seaborn.pydata.org/).
 
 <a name="models"/>
-### Running a simulation: Model Parameters and Equations
+### Running a simulation: model parameters and equations
 The parameter values for each model are included in [ParameterSets](ParameterSets). 
 Note that in each parameter set the final parameter is the conductance parameter which has been set to 0.1 for all models. 
 This value is irrelevant as we scale the literature model simulations to either a simulated or experimental reference trace when plotting these model simulations or using them for comparison.
@@ -64,7 +64,7 @@ If any changes to Mex files are made these must be recomplied using:
 [modeldata.m](Code/modeldata.m) defines the model_type for each model (to determine which Mex file should be used for each model simulation) and also identifies the appropriate parameter set in [ParameterSets](ParameterSets) to be used when simulating each model.
 
 <a name="calibration"/>
-### Calibration: CMAES and MCMC Results
+### Calibration: CMA-ES and MCMC Results
 To find the best fit to the sine wave experimental data we first run [FullGlobalSearch.m](Code/FullGlobalSearch.m) for each cell and then once we've verified that the CMA-ES algorithm repeatedly returns parameters in the same region of parameter space on multiple different iterations we then run [AdaptiveMCMCStartingBestCMAES.m](Code/AdaptiveMCMCStartingBestCMAES.m) to determine MCMC chains. 
 
 [cmaes.m](Code/cmaes.m) defines the CMA-ES algorithm used for the initial search of the parameter space before running MCMC. This file was downloaded from https://www.lri.fr/~hansen/cmaes_inmatlab.html
