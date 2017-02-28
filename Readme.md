@@ -14,7 +14,7 @@ There are additional folders containing the average data for the sine wave ('ave
 repeats from the sine wave protocol for each cell ('sine_wave').
 These data traces correspond to leak and dofetilide subtracted data. 
 
-The full set of raw data traces in both `.abf` and plain text format can be found in [FullExperimentalData](FullExperimentalData).
+Links to the full set of raw data traces in both `.abf` and plain text format can be found in [FullExperimentalData](FullExperimentalData).
 
 ## Codes
 Here we provide details of all the codes for 
