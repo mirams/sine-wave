@@ -39,8 +39,8 @@ Here we provide details of all the codes for
  
 <a name="prereq"/>
 ### Prerequisities
- * For simulations and calibration: [Matlab](https://www.mathworks.com/products/matlab.html) including [Mex](https://uk.mathworks.com/help/matlab/ref/mex.html).
- * [CVODE](http://computation.llnl.gov/projects/sundials/cvode) an ODE solver for stiff systems.
+ * For simulations and calibration: [Matlab](https://www.mathworks.com/products/matlab.html) including [Mex](https://uk.mathworks.com/help/matlab/ref/mex.html) for using fast compiled C++ code.
+ * [CVODE](http://computation.llnl.gov/projects/sundials/cvode) a C++ ODE solver that's great for stiff systems.
  * For plotting: [matplotlib v1.5.3](http://matplotlib.org/1.5.3/index.html) and [seaborn v0.7.1](http://seaborn.pydata.org/).
 
 <a name="models"/>
