@@ -29,7 +29,9 @@ Here we provide details of all the codes for
 The parameter values for each model are included in [ParameterSets](ParameterSets). Note that in each parameter set the final parameter is the conductance parameter which has been set to 0.1 for all models. This value is irrelevant as we scale the literature model simulations to either a simulated or experimental reference trace when plotting these model simulations or using them for comparison.
 
 For each model (or sets of models which share the same model structure and only vary in their parameterisations) there is
-a Mex file detailing the set of equations which define that model. For example [MexWang.c](Code/MexWang.c) is used to simulate the Wang et al. 1997 model. The appropriate Mex file is called when SimulatedData.m is run.
+a Mex file detailing the set of equations which define that model. 
+For example [MexWang.c](Code/MexWang.c) is used to simulate the Wang et al. 1997 model. 
+The appropriate Mex file is called when [SimulatedData.m](Code/SimulatedData.m) is run.
 
 If any changes to Mex files are made these must be recomplied using:
 
