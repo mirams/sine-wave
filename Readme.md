@@ -19,6 +19,7 @@ Here we provide details of all the codes for
  1. Running simulations with a given model and parameter set
  1. Minimisation (CMA-ES)
  1. MCMC
+ 1. Plotting the figures presented in the manuscript
  
 ### Prerequisities
  * For simulations and calibration: [Matlab](https://www.mathworks.com/products/matlab.html) including [Mex](https://uk.mathworks.com/help/matlab/ref/mex.html).
