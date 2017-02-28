@@ -3,14 +3,36 @@
 In this readme we detail both how all the scripts in this folder are used to generate the results in the paper, and which scripts
 are used to collate and plot the data for each figure.
 
-## Experimental Data
-The experimental data used in this study is included in [ExperimentalData](ExperimentalData). 
-There is a folder corresponding to the data used for each cell (correspondence between file names and cell numbers in paper is provided in [cell_index.txt](ExperimentalData/cell_index.txt)). 
-There are additional folders containing the average model data for the sine wave ('average') and one containing the
-repeats from the sine wave protocol for each cell ('sine_wave').
-All the data traces correspond to leak and dofetilide subtracted data. The full set of raw data traces in both .abf and plain text format can be found at SOMEWHERE.
+## Voltage Protocols
+In [Protocols](Protocols) we include the voltage clamp waveform for each of the protocols. These files include a list 
+of voltages that comprise the protocol (in mV), with each row corresponding to a 0.1 ms timestep (10kHz samples).
 
-## CMAES and MCMC Results
+## Experimental Data
+The experimental data used in this study are included in [ExperimentalData](ExperimentalData). 
+There is a folder corresponding to the data for each cell (the correspondence between file names and cell numbers in the paper is provided in [cell_index.txt](ExperimentalData/cell_index.txt)). 
+There are additional folders containing the average data for the sine wave ('average') and one containing the
+repeats from the sine wave protocol for each cell ('sine_wave').
+All the data traces correspond to leak and dofetilide subtracted data. The full set of raw data traces in both .abf and plain text format can be found at ***SOMEWHERE***.
+
+## Codes
+Here we provide details of all the codes for 
+1. Running simulations with a given model and parameter set
+1. Minimisation (CMA-ES)
+1. MCMC
+
+### Model Parameters and Equations
+The parameter values for each model are included in [ParameterSets](ParameterSets). Note that in each parameter set the final parameter is the conductance parameter which has been set to 0.1 for all models. This value is irrelevant as we scale the literature model simulations to either a simulated or experimental reference trace when plotting these model simulations or using them for comparison.
+
+For each model (or sets of models which share the same model structure and only vary in their parameterisations) there is
+a Mex file detailing the set of equations which define that model. For example [MexWang.c](Code/MexWang.c) is used to simulate the Wang et al. 1997 model. The appropriate Mex file is called when SimulatedData.m is run.
+
+If any changes to Mex files are made these must be recomplied using:
+
+`mex -I/path_to_CVODE/include -L/path_to_CVODE/lib -lsundials_nvecserial -lsundials_cvode MexFilename.c`
+
+[modeldata.m](Code/modeldata.m) defines the model_type for each model (to determine which Mex file should be used for each model simulation) and also identifies the appropriate parameter set in [ParameterSets](ParameterSets) to be used when simulating each model.
+
+### CMAES and MCMC Results
 To find the best fit to the sine wave experimental data we first run [FullGlobalSearch.m](Code/FullGlobalSearch.m) for each cell and then once we've verified that the CMA-ES algorithm repeatedly returns parameters in the same region of parameter space on multiple different iterations we then run [AdaptiveMCMCStartingBestCMAES.m](Code/AdaptiveMCMCStartingBestCMAES.m) to determine MCMC chains. 
 
 [cmaes.m](Code/cmaes.m) defines the CMA-ES algorithm used for the initial search of the parameter space before running MCMC.
@@ -28,35 +50,19 @@ corresponding to these parameter values and the acceptance rate over the running
 [PlottingSamplesFromMCMC.m](Code/PlottingSamplesFromMCMC.m) is used to assess the 95% credible intervals for the fits to the sine wave protocol when taken 1000 samples from the results MCMC parameter distributions. 
 This figure is quoted in the text in Model Calibration Section 2.2.
 
-## Voltage Protocols
-In [Protocols](Protocols) we include the voltage clamp waveform for each of the protocols. These files include a list 
-of times and voltages that comprise the protocol (in mV), with each row corresponding to a 0.1 ms timestep (10kHz samples).
-
-## Model Parameters and Equations
-The parameter values for each model are included in [ParameterSets](ParameterSets). Note that in each parameter set the final parameter is the conductance parameter which has been set to 0.1 for all models. This value is irrelevant as we scale the literature model simulations to either a simulated or experimental reference trace when plotting these model simulations or using them for comparison.
-
-For each model (or sets of models which share the same model structure and only vary in their parameterisations) there is
-a Mex file detailing the set of equations which define that model. For example [MexWang.c](Code/MexWang.c) is used to simulate the Wang et al. 1997 model. The appropriate Mex file is called when SimulatedData.m is run.
-
-If any changes to Mex files are made these must be recomplied using:
-
-`mex -I/path_to_CVODE/include -L/path_to_CVODE/lib -lsundials_nvecserial -lsundials_cvode MexFilename.c`
-
-[modeldata.m](Code/modeldata.m) defines the model_type for each model (to determine which Mex file should be used for each model simulation) and also identifies the appropriate parameter set in [ParameterSets](ParameterSets) to be used when simulating each model.
-
-## Synthetic Data
+#### Synthetic Data
 In [SimulatedData](SimulatedData) we have the simulated data trace from the maximum likelihood parameters identified from fitting 
-to experimental data for cell 5. This data trace was produced using [ProducingSimulatedDataWithNoise.m](Code/ProducingSimulatedDataWithNoise.m). We use this data 
-to produce the simulated data trace MCMC distributions shown in Figure C5. 
+to experimental data for cell 5. 
+This data trace was produced using [ProducingSimulatedDataWithNoise.m](Code/ProducingSimulatedDataWithNoise.m). 
+We use these data to produce the simulated data trace MCMC distributions shown in Figure C5. 
 
 In [MCMCResultsSimulated](MCMCResultsSimulated) there is the MCMC chain (and likelihood and acceptancerate files) for the synthetic data study results shown in Figure C5.
 
-## Averaged Model
-[CreatingAveragedModel.m](Code/CreatingAveragedModel.m) creates the 'averaged' sine wave data which was used to fit the average model for comparison of 
-cell-specific vs. average model predictions.
+#### Averaged/All data Model
+[CreatingAveragedModel.m](Code/CreatingAveragedModel.m) creates the 'averaged' sine wave data which was used to fit an 'average' model for comparison of cell-specific vs. average model predictions.
 
-### Scripts for Generating Data in and Plotting Figures
-Code to generate and plot data in each figure:
+### Scripts for Plotting Figures
+Code to generate and plot data for each of the figures in the main text and supplement are listed here:
 
 - Figure 1 - run [PlottingFigure1AllModels.m](Code/PlottingFigure1AllModels.m)
 - Figure 2 - to produce Figure 2 run [PlottingFigure2.m](Code/PlottingFigure2.m) to generate the data for the figure then [plot_figure_2_results.py](Figures/figure_2/plot_figure_2_results.py).
@@ -70,8 +76,8 @@ Code to generate and plot data in each figure:
   - run [CalculatingGoodnessOfFitSineWave.m](Code/CalculatingGoodnessOfFitSineWave.m) to generate column 1 . 
   - run [CalculatingGoodnessOfFitActionPotential.m](Code/CalculatingGoodnessOfFitActionPotential.m) to generate column 2
   - run [CalculatingGoodnessOfFitSteadyActivation.m](Code/CalculatingGoodnessOfFitSteadyActivation.m) to generate column 3
-  - run [CalculatingGoodnessOfFitSteadyDeactivation.m](Code/CalculatingGoodnessOfFitSteadyDeactivation.m) to generate column 4
-  - run [CalculatingGoodnessOfFitSteadyInactivation.m](Code/CalculatingGoodnessOfFitSteadyInactivation.m) to generate column 5
+  - run [CalculatingGoodnessOfFitDeactivation.m](Code/CalculatingGoodnessOfFitDeactivation.m) to generate column 4
+  - run [CalculatingGoodnessOfFitInactivation.m](Code/CalculatingGoodnessOfFitInactivation.m) to generate column 5
   - heat map plot form of table is generated by running `results_to_latex_tables.m <file>` for each cell (found in [Figures/table_d_2_to_d_10](Figures/table_d_2_to_d_10))
 - Figure E6 - 
   run [PlottingActivationKinetics1NormalisedPeakSine.m](Code/PlottingActivationKinetics1NormalisedPeakSine.m)
@@ -83,9 +89,9 @@ Code to generate and plot data in each figure:
   - run [CalculatingGoodnessOfFitSineWave.m](Code/CalculatingGoodnessOfFitSineWave.m) to generate column 3 and 4
   - run [CalculatingGoodnessOfFitActionPotential.m](Code/CalculatingGoodnessOfFitActionPotential.m) to generate column 5 and 6
   - run [CalculatingGoodnessOfFitSteadyActivation.m](Code/CalculatingGoodnessOfFitSteadyActivation.m) to generate column 7 and 8
-  - run [CalculatingGoodnessOfFitSteadyDeactivation.m](Code/CalculatingGoodnessOfFitSteadyDeactivation.m) to generate column 9 and 10
-  - run [CalculatingGoodnessOfFitSteadyInactivation.m](Code/CalculatingGoodnessOfFitSteadyInactivation.m) to generate column 11 and 12
-  Note that the `<exp_ref>` is required to run each of these functions, which corresponds to the experimental number of each cell (which can be found in [cell_index.txt](ExperimentalData/cell_index.txt)).
+  - run [CalculatingGoodnessOfFitDeactivation.m](Code/CalculatingGoodnessOfFitDeactivation.m) to generate column 9 and 10
+  - run [CalculatingGoodnessOfFitInactivation.m](Code/CalculatingGoodnessOfFitInactivation.m) to generate column 11 and 12
+  - Note that the `<exp_ref>` is required to run each of these functions, which corresponds to the experimental number of each cell (which can be found in [cell_index.txt](ExperimentalData/cell_index.txt)).
   To generate the leak resistance in column 2 we compared the resistance value identified when leak subtracting the vehicle repeat of the sine wave and the sine wave recording in the presence of dofetilide (as detailed in [ManualLeakSubtraction.m]()) for each experiment. The heat map form of table is generated by running [results_to_latex_tables.m](Figures/table_f_12/results_to_latex_tables.m). 
 - Figure F8 - Data is generated by [PlottingSmallMultiplesDeactivationWeightedTau.m](Code/PlottingSmallMultiplesDeactivationWeightedTau.m)
 - Figure F9 - Data is generated by [PlottingSmallMultiplesRecoveryInactivation.m](Code/PlottingSmallMultiplesRecoveryInactivation.m)
