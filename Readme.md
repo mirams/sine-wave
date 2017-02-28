@@ -1,7 +1,7 @@
 # Sinusoidal voltage protocols for rapid characterization of ion channel kinetics: Supplementary Data
 
-In this readme we detail both how all the scripts in this folder are used to generate the results in the paper, and which scripts
-are used to collate and plot the data for each figure.
+In this readme we detail the contents of this Supplementary Data repository. 
+We'll explain how all the scripts in this folder are used to generate the results in the paper, and which scripts are used to collate and plot the data for each figure.
 
 ## Voltage Protocols
 In [Protocols](Protocols) we include the voltage clamp waveform for each of the protocols. These files include a list 
