@@ -75,11 +75,10 @@ To find the best fit to the sine wave experimental data we first run [FullGlobal
 
 The contents of [CMAESFullSearchResults](CMAESFullSearchResults) give an example output of CMAES search results to be used for running of the MCMC algorithm (for cell #5).
 
-In [MCMCResults](MCMCResults) there are all the MCMC chains run from fitting each cell's sine wave data to the model as well
-as the average model. We include a separate file for each cell for the parameter values in the MCMC chain, the likelihoods 
-corresponding to these parameter values and the acceptance rate over the running of the MCMC chain.
+In [MCMCResults](MCMCResults) there are all the MCMC chains run from fitting the model to each cell's sine wave data (as well as the average model). 
+We include a separate file for each cell for: (i) the parameter values in the MCMC chain; (ii) the likelihoods corresponding to these parameter values; and (iii) the acceptance rate over the running of the MCMC chain.
 
-[PlottingSamplesFromMCMC.m](Code/PlottingSamplesFromMCMC.m) is used to assess the 95% credible intervals for the fits to the sine wave protocol when taken 1000 samples from the results MCMC parameter distributions. 
+[PlottingSamplesFromMCMC.m](Code/PlottingSamplesFromMCMC.m) is used to assess the 95% credible intervals for the fits to the sine wave protocol when taking 1000 samples from the MCMC parameter distribution results. 
 This figure is quoted in the text in Model Calibration Section 2.2.
 
 <a name="synthetic"/>
