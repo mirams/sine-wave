@@ -16,9 +16,13 @@ All the data traces correspond to leak and dofetilide subtracted data. The full 
 
 ## Codes
 Here we provide details of all the codes for 
-1. Running simulations with a given model and parameter set
-1. Minimisation (CMA-ES)
-1. MCMC
+ 1. Running simulations with a given model and parameter set
+ 1. Minimisation (CMA-ES)
+ 1. MCMC
+ 
+### Prerequisities
+ * For simulations and calibration: [Matlab](https://www.mathworks.com/products/matlab.html) including [Mex](https://uk.mathworks.com/help/matlab/ref/mex.html).
+ * For plotting: [matplotlib v1.5.3](http://matplotlib.org/1.5.3/index.html) and [seaborn v0.7.1](http://seaborn.pydata.org/).
 
 ### Model Parameters and Equations
 The parameter values for each model are included in [ParameterSets](ParameterSets). Note that in each parameter set the final parameter is the conductance parameter which has been set to 0.1 for all models. This value is irrelevant as we scale the literature model simulations to either a simulated or experimental reference trace when plotting these model simulations or using them for comparison.
