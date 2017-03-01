@@ -160,7 +160,8 @@ gs3.update(wspace=0.07)
 data = numpy.loadtxt('figure_3_c/MCMC_likelihood_and_samples.txt', skiprows=0)
 likelihoods = data[:,0]
 max_likelihood_index = numpy.argmax(likelihoods)
-print('Maximum likelihood at index',max_likelihood_index)
+print('Maximum likelihood at index ', max_likelihood_index)
+max_likelihood_values = data[max_likelihood_index,:]
 
 # Remove 'burn in'
 data = data[50001:,:]
@@ -243,7 +244,8 @@ for i in range(0,9):
     for label in ax.get_xticklabels():
         label.set_rotation(305)
         label.set_horizontalalignment("left")
-    ax.plot(data[max_likelihood_index,i+1], 0, 'kx', markersize=10, markeredgewidth=3, clip_on=False)
+    print('Max posterior density for P',i+1,' is at', max_likelihood_values[i+1])
+    ax.plot(max_likelihood_values[i+1], 0, 'kx', markersize=10, markeredgewidth=3, clip_on=False)
     if i==8:
         ax.get_xaxis().set_label_coords(+0.5,0.93)
     else:
