@@ -8,6 +8,7 @@ import numpy
 from os.path import join, exists
 import re
 import sys
+import math
 plt.switch_backend('pdf')
 
 voltage_file = 'figure_5_ap_protocol_data.txt'
@@ -59,6 +60,7 @@ def get_filename(argument):
     }
     return switcher.get(argument, "nothing")
 
+model_names = ['ten Tusscher','Mazhari','DiVeroli','Wang','Zeng','Experimental Data','New Model']
 
 for i in range(0,7):
     file = open(get_filename(i), 'r')
@@ -68,6 +70,35 @@ for i in range(0,7):
         currents = numpy.zeros((len(all_time),7))
     currents[:,i] = data[:,1]
 
+# Work out error measures
+fig2 = plt.figure(1, figsize=(8,11.3), dpi=900)
+gs3 = gridspec.GridSpec(6, 1)
+mean_error = numpy.empty(7)
+zeros = numpy.zeros(len(currents[:,0]))
+for i in [0,1,2,3,4,6]:
+    if i<6:
+        ax = fig2.add_subplot(gs3[i])
+    else:
+        ax = fig2.add_subplot(gs3[-1])
+        ax.set_xlabel('Time (s)')
+    error_measure = currents[:,i]-currents[:,5]
+    #ax.plot(all_time, error_measure, color='k', lw=1)
+    ax.fill_between(all_time,error_measure,zeros,lw=0,color=color_cycle[i])
+    ax.set_ylim([-0.6,0.6])
+    ax.set_title(model_names[i])
+    ax.set_ylabel('Error (nA)')
+    error_measure = numpy.sqrt(pow(error_measure,2))
+    mean_error[i] = numpy.mean(error_measure)
+
+for i in [0,1,2,3,4,6]:
+    print(model_names[i],' mean error = ',mean_error[i],' nA')
+    print(model_names[i],' percent increase over New Model Error = ',100*mean_error[i]/mean_error[6]-100,'%')
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
+plt.tight_layout()
+plt.savefig('errors.pdf', bbox_inches='tight', dpi=900, pad_inches=0.05)
+
+plt.figure(0)
 start_of_zoom_time = 3.
 length_of_zoom_time = 4.3
 lower_zoom_voltage = -90
