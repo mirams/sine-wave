@@ -12,25 +12,30 @@ We'll explain how all the scripts in this folder are used to generate the result
    - [Calibration](#calibration)
    - [Figures](#figures)
  - [Additional Notes](#additional)
- 
 
 <a name="protocols"/>
+
 ## Voltage Protocols
+
 In [Protocols](Protocols) we include the voltage clamp waveform for each of the protocols. These files include a list 
 of voltages that comprise the protocol (in mV), with each row corresponding to a 0.1 ms timestep (10kHz samples).
 
 <a name="data"/>
+
 ## Experimental Data
+
 The processed (leak and dofefilide subtracted) experimental data are included in [ExperimentalData](ExperimentalData). 
-There is a folder corresponding to the data for each cell (the correspondence between file names and cell numbers in the paper is provided in [cell_index.txt](ExperimentalData/cell_index.txt)). 
+There is a folder corresponding to the data for each cell (the correspondence between file names and cell numbers in the paper is provided in [cell_index.txt](ExperimentalData/cell_index.txt)).
 There are additional folders containing the average data for the sine wave ('average') and one containing the
 repeats from the sine wave protocol for each cell ('sine_wave').
-These data traces correspond to leak and dofetilide subtracted data. 
+These data traces correspond to leak and dofetilide subtracted data.
 
 Links to the full set of raw data traces in both `.abf` and plain text format can be found in [FullExperimentalData](FullExperimentalData).
 
 <a name="code"/>
+
 ## Codes
+
 Here we provide details of all the codes for 
  1. Running simulations with a given model and parameter set
  1. Minimisation (CMA-ES)
@@ -38,6 +43,7 @@ Here we provide details of all the codes for
  1. Plotting the figures presented in the manuscript
  
 <a name="prereq"/>
+
 ### Prerequisities
 
 You should set up the below programs before attempting to run our code.
@@ -47,6 +53,7 @@ You should set up the below programs before attempting to run our code.
  * For plotting: [matplotlib v1.5.3](http://matplotlib.org/1.5.3/index.html) and [seaborn v0.7.1](http://seaborn.pydata.org/).
 
 <a name="models"/>
+
 ### Running a simulation: model parameters and equations
 The parameter values for each model are included in [ParameterSets](ParameterSets). 
 Note that in each parameter set the final parameter is the conductance parameter which has been set to 0.1 for all models. 
@@ -64,6 +71,7 @@ If any changes to Mex files are made these must be recomplied using:
 [modeldata.m](Code/modeldata.m) defines the model_type for each model (to determine which Mex file should be used for each model simulation) and also identifies the appropriate parameter set in [ParameterSets](ParameterSets) to be used when simulating each model.
 
 <a name="calibration"/>
+
 ### Calibration: CMA-ES and MCMC Results
 To find the best fit to the sine wave experimental data we first run [FullGlobalSearch.m](Code/FullGlobalSearch.m) for each cell and then once we've verified that the CMA-ES algorithm repeatedly returns parameters in the same region of parameter space on multiple different iterations we then run [AdaptiveMCMCStartingBestCMAES.m](Code/AdaptiveMCMCStartingBestCMAES.m) to determine MCMC chains. 
 
@@ -82,6 +90,7 @@ We include a separate file for each cell for: (i) the parameter values in the MC
 This figure is quoted in the text in Model Calibration Section 2.2.
 
 <a name="synthetic"/>
+
 #### Synthetic Data
 In [SimulatedData](SimulatedData) we have the simulated data trace from the maximum likelihood parameters identified from fitting 
 to experimental data for cell 5. 
@@ -91,10 +100,12 @@ We use these data to produce the simulated data trace MCMC distributions shown i
 In [MCMCResultsSimulated](MCMCResultsSimulated) there is the MCMC chain (and likelihood and acceptancerate files) for the synthetic data study results shown in Figure C5.
 
 <a name="averaged"/>
+
 #### Averaged/All data Model
 [CreatingAveragedModel.m](Code/CreatingAveragedModel.m) creates the 'averaged' sine wave data which was used to fit an 'average' model for comparison of cell-specific vs. average model predictions.
 
 <a name="figures"/>
+
 ### Scripts for Plotting Figures
 Code to generate and plot data for each of the figures in the main text and supplement are listed here:
 
@@ -134,6 +145,7 @@ Code to generate and plot data for each of the figures in the main text and supp
   To plot figures F8-F10 run [plot_figures_F8_to_F10.py](Figures/figure_f8_to_f10/plot_figures_F8_to_F10.py)
 
 <a name="additional"/>
+
 ## Additional Notes
 
 Any remaining `.m` files not described in this document are used within the individual scripts described above with a note within each script about their use.
