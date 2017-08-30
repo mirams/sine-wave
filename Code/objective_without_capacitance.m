@@ -24,8 +24,8 @@ if S==1
     
     % Calculate log likelihood first removing capactive spikes from experimental and simulation traces to ensure that these artefacts
     % do not adversely affect fitting to the current trace.
-    J = [I(1:2499);I(2549:2999);I(3049:4999);I(5049:14999);I(15049:19999);I(20049:29999);I(30049:64999);I(65049:69999);I(700049:end)];
-    F = [D(1:2499);D(2549:2999);D(3049:4999);D(5049:14999);D(15049:19999);D(20049:29999);D(30049:64999);D(65049:69999);D(700049:end)];
+    J = [I(1:2499);I(2549:2999);I(3049:4999);I(5049:14999);I(15049:19999);I(20049:29999);I(30049:64999);I(65049:69999);I(70049:end)];
+    F = [D(1:2499);D(2549:2999);D(3049:4999);D(5049:14999);D(15049:19999);D(20049:29999);D(30049:64999);D(65049:69999);D(70049:end)];
     
     L_I =   -0.5.*length(J)*log((2.*pi).*(sig.^2))-0.5.*(1/((sig)^2))*(sum((F-J).^(2)));
     
