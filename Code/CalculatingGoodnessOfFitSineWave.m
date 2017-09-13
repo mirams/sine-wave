@@ -100,8 +100,8 @@ I=SimulatingData(35,{'sine_wave'},k,V,temperature);
 I_av=SimulatingData(35,{'sine_wave'},k_av,V,temperature);
 
 % Capacitive spikes removed from sine wave experimental and simulation traces
-J = [I(1:2499);I(2549:2999);I(3049:4999);I(5049:14999);I(15049:19999);I(20049:29999);I(30049:64999);I(65049:69999);I(700049:end)];
-F = [D(1:2499);D(2549:2999);D(3049:4999);D(5049:14999);D(15049:19999);D(20049:29999);D(30049:64999);D(65049:69999);D(700049:end)];
+J = [I(1:2499);I(2549:2999);I(3049:4999);I(5049:14999);I(15049:19999);I(20049:29999);I(30049:64999);I(65049:69999);I(70049:end)];
+F = [D(1:2499);D(2549:2999);D(3049:4999);D(5049:14999);D(15049:19999);D(20049:29999);D(30049:64999);D(65049:69999);D(70049:end)];
 
 % Scale average model to minimise square difference between simulation and experiment exp_ref sine wave recording
 c=0;
@@ -218,18 +218,18 @@ sz = v*0.01+0.000001;
 JZ = sz.*IZ;
 IZ=JZ;
 % Capacitive spikes removed from literature models scaled simulated traces
-JJZ = [IZ(1:2499);IZ(2549:2999);IZ(3049:4999);IZ(5049:14999);IZ(15049:19999);IZ(20049:29999);IZ(30049:64999);IZ(65049:69999);IZ(700049:end)];
-JJT = [IT(1:2499);IT(2549:2999);IT(3049:4999);IT(5049:14999);IT(15049:19999);IT(20049:29999);IT(30049:64999);IT(65049:69999);IT(700049:end)];
-JJW = [IW(1:2499);IW(2549:2999);IW(3049:4999);IW(5049:14999);IW(15049:19999);IW(20049:29999);IW(30049:64999);IW(65049:69999);IW(700049:end)];
-JJM = [IM(1:2499);IM(2549:2999);IM(3049:4999);IM(5049:14999);IM(15049:19999);IM(20049:29999);IM(30049:64999);IM(65049:69999);IM(700049:end)];
-JJD = [ID(1:2499);ID(2549:2999);ID(3049:4999);ID(5049:14999);ID(15049:19999);ID(20049:29999);ID(30049:64999);ID(65049:69999);ID(700049:end)];
+JJZ = [IZ(1:2499);IZ(2549:2999);IZ(3049:4999);IZ(5049:14999);IZ(15049:19999);IZ(20049:29999);IZ(30049:64999);IZ(65049:69999);IZ(70049:end)];
+JJT = [IT(1:2499);IT(2549:2999);IT(3049:4999);IT(5049:14999);IT(15049:19999);IT(20049:29999);IT(30049:64999);IT(65049:69999);IT(70049:end)];
+JJW = [IW(1:2499);IW(2549:2999);IW(3049:4999);IW(5049:14999);IW(15049:19999);IW(20049:29999);IW(30049:64999);IW(65049:69999);IW(70049:end)];
+JJM = [IM(1:2499);IM(2549:2999);IM(3049:4999);IM(5049:14999);IM(15049:19999);IM(20049:29999);IM(30049:64999);IM(65049:69999);IM(70049:end)];
+JJD = [ID(1:2499);ID(2549:2999);ID(3049:4999);ID(5049:14999);ID(15049:19999);ID(20049:29999);ID(30049:64999);ID(65049:69999);ID(70049:end)];
 
 % Square differences between scaled simulated and experimental traces calculated for cell-specific and average
 % model fits as well as literature model predictions.
-cell_specific_diff = sqrt((sum((F-J).^2))/length(J))
-average_diff  =  sqrt((sum((F-K_av).^2))/length(K_av))
-wang_diff = sqrt((sum((F-JJW).^2))/length(JJW))
-diveroli_diff = sqrt((sum((F-JJD).^2))/length(JJD))
-mazhari_diff = sqrt((sum((F-JJM).^2))/length(JJM))
-tentusscher_diff = sqrt((sum((F-JJT).^2))/length(JJT))
-zeng_diff = sqrt((sum((F-JJZ).^2))/length(JJZ))
+cell_specific_diff = sum((sqrt((F-J).^2)))/length(J)
+average_diff  =  sum((sqrt((F-K_av).^2)))/length(K_av)
+wang_diff = sum((sqrt((F-JJW).^2)))/length(JJW)
+diveroli_diff = sum((sqrt((F-JJD).^2)))/length(JJD)
+mazhari_diff = sum((sqrt((F-JJM).^2)))/length(JJM)
+tentusscher_diff = sum((sqrt((F-JJT).^2)))/length(JJT)
+zeng_diff = sum((sqrt((F-JJZ).^2)))/length(JJZ)

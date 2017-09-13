@@ -8,13 +8,16 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="figure_3_a.svg"
+   sodipodi:docname="figure_3_b.svg"
    inkscape:version="0.91 r13725"
    id="svg3355"
    version="1.1"
    viewBox="0 0 813.01639 364.02255"
    height="128.41907mm"
-   width="286.81412mm">
+   width="286.81412mm"
+   inkscape:export-filename="/Users/garmir/Dropbox (Personal)/Shared Folders/Kylie_hERGPaperFigures/Supplementary Data/Code/Figures/figure_3/figure_3_b.png"
+   inkscape:export-xdpi="360"
+   inkscape:export-ydpi="360">
   <metadata
      id="metadata3808">
     <rdf:RDF>
@@ -23,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -33,11 +36,11 @@
      inkscape:window-y="1"
      inkscape:window-x="0"
      inkscape:cy="98.662424"
-     inkscape:cx="315.11498"
+     inkscape:cx="115.58469"
      inkscape:zoom="0.8144127"
      showgrid="false"
      id="namedview3806"
-     inkscape:window-height="808"
+     inkscape:window-height="805"
      inkscape:window-width="1440"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
@@ -1053,9 +1056,9 @@
   </g>
   <g
      id="g7483"
-     transform="matrix(3.0688779,0,0,3.0688779,-6.7851244,5.5039108)">
+     transform="matrix(3.0688779,0,0,3.0688779,2.8148767,5.5039108)">
     <g
-       transform="translate(3.9418942,-7.6374201)"
+       transform="translate(12.283705,-7.6374201)"
        style="fill:#000000;fill-opacity:1"
        id="g3478">
       <use
@@ -1063,18 +1066,6 @@
          x="91.488708"
          y="35.840218"
          id="use3480"
-         width="100%"
-         height="100%" />
-    </g>
-    <g
-       transform="translate(3.9418942,-7.6374201)"
-       style="fill:#000000;fill-opacity:1"
-       id="g3482">
-      <use
-         xlink:href="#glyph0-3"
-         x="100.85255"
-         y="35.840218"
-         id="use3484"
          width="100%"
          height="100%" />
     </g>
@@ -1094,7 +1085,7 @@
   <g
      id="g3490"
      style="fill:#000000;fill-opacity:1"
-     transform="matrix(3.0688779,0,0,3.0688779,-1.501162,18.575051)">
+     transform="matrix(3.0688779,0,0,3.0688779,-6.3011624,18.575051)">
     <use
        height="100%"
        width="100%"
@@ -1746,7 +1737,7 @@
   <g
      style="fill:#97d494;fill-opacity:1"
      id="g6979-2"
-     transform="matrix(4.4427364,0,0,4.4427364,-765.80718,-1324.626)">
+     transform="matrix(4.4427364,0,0,4.4427364,-772.20718,-1324.626)">
     <use
        height="100%"
        width="100%"
@@ -1758,7 +1749,7 @@
   <g
      style="fill:#97d494;fill-opacity:1"
      id="g6983-3"
-     transform="matrix(4.4427364,0,0,4.4427364,-765.80718,-1324.626)">
+     transform="matrix(4.4427364,0,0,4.4427364,-772.20718,-1324.626)">
     <use
        height="100%"
        width="100%"
@@ -1768,7 +1759,7 @@
        id="use6985-1" />
   </g>
   <g
-     transform="matrix(0,-3.0688779,3.0688779,0,292.10492,393.77524)"
+     transform="matrix(0,-3.0688779,3.0688779,0,285.70492,393.77524)"
      id="g8108-6-6">
     <path
        inkscape:connector-curvature="0"
@@ -1782,7 +1773,7 @@
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Mend-9-0-2)" />
   </g>
   <g
-     transform="matrix(4.4427364,0,0,4.4427364,-846.62593,-1258.0524)"
+     transform="matrix(4.4427364,0,0,4.4427364,-853.02593,-1258.0524)"
      id="g8276"
      style="fill:#2878b3;fill-opacity:1">
     <use
@@ -1794,7 +1785,7 @@
        height="100%" />
   </g>
   <g
-     transform="matrix(4.4427364,0,0,4.4427364,-846.62593,-1258.0524)"
+     transform="matrix(4.4427364,0,0,4.4427364,-853.02593,-1258.0524)"
      id="g8280"
      style="fill:#2878b3;fill-opacity:1">
     <use

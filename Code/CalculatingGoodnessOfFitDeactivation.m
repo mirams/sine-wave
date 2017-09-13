@@ -226,11 +226,12 @@ JJM = IM;
 JJD = ID;
 
 % Calculate differences between literature, cell specific and average models and deactivation experiment
-cell_specific_diff = sqrt((sum((F-J).^2))/length(J))
-average_diff  =  sqrt((sum((F-K_av).^2))/length(K_av))
+cell_specific_diff = sum((sqrt((F-J).^2)))/length(J)
+average_diff  =  sum((sqrt((F-K_av).^2)))/length(K_av)
 
-wang_diff = sqrt((sum((F-JJW).^2))/length(JJW))
-diveroli_diff = sqrt((sum((F-JJD).^2))/length(JJD))
-mazhari_diff = sqrt((sum((F-JJM).^2))/length(JJM))
-tentusscher_diff = sqrt((sum((F-JJT).^2))/length(JJT))
-zeng_diff = sqrt((sum((F-JJZ).^2))/length(JJZ))
+wang_diff = sum((sqrt((F-JJW).^2)))/length(JJW)
+diveroli_diff = sum((sqrt((F-JJD).^2)))/length(JJD)
+mazhari_diff = sum((sqrt((F-JJM).^2)))/length(JJM)
+tentusscher_diff = sum((sqrt((F-JJT).^2)))/length(JJT)
+zeng_diff = sum((sqrt((F-JJZ).^2)))/length(JJZ)
+

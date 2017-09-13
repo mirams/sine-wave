@@ -15,7 +15,7 @@ for i = 1:numel(files)
     
     DD(:,i)=D;
     % Scaling factor is calculated with removal of capacative spikes to minimise difference between each trace and the reference trace (last trace in the file)
-    I(:,i)= [D(1:2499);D(2549:2999);D(3049:4999);D(5049:14999);D(15049:19999);D(20049:29999);D(30049:64999);D(65049:69999);D(700049:end)];
+    I(:,i)= [D(1:2499);D(2549:2999);D(3049:4999);D(5049:14999);D(15049:19999);D(20049:29999);D(30049:64999);D(65049:69999);D(70049:end)];
 end
 N=size(I,2);
 c=0;

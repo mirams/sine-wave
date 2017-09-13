@@ -1,6 +1,10 @@
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import matplotlib.patches as patches
+import matplotlib as mpl
+mpl.style.use('classic') # Use Matplotlib v1 defaults (plot was designed on this!)
+mpl.rc('text', usetex=True)
+
 from matplotlib.ticker import FormatStrFormatter, ScalarFormatter
 
 import numpy
@@ -10,14 +14,16 @@ import sys
 plt.switch_backend('pdf')
 plt.tick_params(axis='both', which='minor', labelsize=16)
 
+# Load data
 voltage_file = 'figure_3_a/figure_3_model_fit_protocol.txt'
 data = numpy.loadtxt(voltage_file, skiprows=0)
 all_time = data[:, 0]
 voltage = data[:,1]
 
+# Make overall plot
 fig = plt.figure(0, figsize=(10,7), dpi=900)
-#fig.text(0.51, 0.9, r'{0}'.format('Title'), ha='center', va='center', fontsize=16)
 
+## Settings for zoom secion ##
 start_of_zoom_time = 4.  # seconds
 length_of_zoom_time = 2. # seconds
 low_zoom_current = -1.1  # nA
@@ -32,15 +38,11 @@ ax2 = fig.add_subplot(gs1[1], sharex=ax1)
 plt.setp(ax1.get_xticklabels(), visible=False)
 
 # Voltage trace
-#ax1.set_title('Summat', fontsize=14)
 ax1.set_ylabel('Voltage (mV)', fontsize=14)
-#ax1.set_xlabel('Time (s)')
-#plt.setp(ax.get_xticklabels(), visible=False)
 ax1.set_xlim([0, 8])
 ax1.set_ylim([-130, 65])
+ax1.yaxis.set_major_formatter(FormatStrFormatter('%.0f'))
 
-#ax1.set_yticklabels([r'$-10$', r'$-5$', r'$0$', r'$5$', r'$10$', r'$15$', r'$20$'])
-#ax1.set_xticklabels([r'$10^{-3}$', r'$10^{-2}$', r'$10^{-1}$', r'$10^0$', r'$10^1$', r'$10^2$'])
 ax1.plot(all_time, voltage, color='k', lw=2)
 # Shade in the zoomed in region
 ax1.add_patch(
@@ -65,11 +67,11 @@ data = numpy.loadtxt(current_file, skiprows=0)
 fitted_simulated_current = data[:,1]
 
 # Current trace
-#ax2.set_title('Summat', fontsize=14)
 ax2.set_xlim([0, 8])
 lower_current = -3.2
 ax2.set_ylim([lower_current, 1.5])
 ax2.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+ax2.xaxis.set_major_formatter(FormatStrFormatter('%.0f'))
 
 # Shade in the zoomed in region
 ax2.add_patch(
@@ -89,7 +91,7 @@ ax2.set_ylabel('Current (nA)', fontsize=14)
 ax2.set_xlabel('Time (s)', fontsize=14)
 
 ax2.legend([a,b], ["Experiment","Fitted model"], loc=8, handletextpad=0.1, columnspacing=1,
-           ncol=2, borderaxespad=1)
+           ncol=2, borderpad=0.6)
 
 # Add the little zoom patch between plots
 patch_vertices = numpy.array([[start_of_zoom_time,lower_current],[0,-4.45],[8,-4.45],[start_of_zoom_time+length_of_zoom_time,lower_current]])
@@ -111,17 +113,11 @@ ax3 = fig.add_subplot(gs2[0])
 ax4 = fig.add_subplot(gs2[1], sharex=ax3)
 plt.setp(ax3.get_xticklabels(), visible=False)
 # Voltage zoom trace
-#ax3.set_title('Summat', fontsize=14)
 ax3.set_ylabel('Voltage (mV)', fontsize=14)
-
-#ax3.set_xlabel('Time (s)')
-#plt.setp(ax.get_xticklabels(), visible=False)
 ax3.set_xlim([start_of_zoom_time, start_of_zoom_time+length_of_zoom_time])
 ax3.set_ylim([-130, 65])
-#ax3.set_yticklabels([r'$-10$', r'$-5$', r'$0$', r'$5$', r'$10$', r'$15$', r'$20$'])
-#ax3.set_xticklabels([r'$10^{-3}$', r'$10^{-2}$', r'$10^{-1}$', r'$10^0$', r'$10^1$', r'$10^2$'])
 ax3.plot(all_time, voltage, color='k', lw=2)
-
+ax3.yaxis.set_major_formatter(FormatStrFormatter('%.0f'))
 
 # Current zoom trace
 ax4 = plt.subplot(gs2[1])
@@ -130,14 +126,18 @@ ax4.set_ylabel('Current (nA)', fontsize=14)
 ax4.set_xlabel('Time (s)', fontsize=14)
 ax4.set_xlim([start_of_zoom_time, start_of_zoom_time+length_of_zoom_time])
 ax4.set_ylim([low_zoom_current, high_zoom_current])
-#ax4.set_prop_cycle(cycler('color',color_cycle[:,4:5]) + cycler('lw',line_width_cycle[:,4:5]))
 ax4.plot(all_time, experimental_current,color='r',lw=1)
 [f] = ax4.plot(all_time, fitted_simulated_current,color=[0,0.45,0.74], lw=1)
-
+ax4.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+ax4.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
 # Squeeze the voltage and current plots together
 gs1.update(hspace=0.0)
 gs2.update(hspace=0.0)
+
+for ax in [ax1, ax2, ax3, ax4]:
+    ax.tick_params(labelsize=14)
+    ax.get_yaxis().set_label_coords(-0.08,0.5)
 
 ################################################################################
 # PLOT THE SCHEMATIC - unfortunately it doesn't seem to import PDF, so use .png
@@ -160,8 +160,7 @@ gs3.update(wspace=0.07)
 data = numpy.loadtxt('figure_3_c/MCMC_likelihood_and_samples.txt', skiprows=0)
 likelihoods = data[:,0]
 max_likelihood_index = numpy.argmax(likelihoods)
-print('Maximum likelihood at index ', max_likelihood_index)
-max_likelihood_values = data[max_likelihood_index,:]
+print('Maximum likelihood at index',max_likelihood_index)
 
 # Remove 'burn in'
 data = data[50001:,:]
@@ -217,7 +216,7 @@ ax13.set_xlabel('$P_8$')
 ax14 = fig.add_subplot(gs3[2,2],sharey=ax12)
 weights = numpy.ones_like(data[:,9])/float(len(data[:,9]))
 ax14.hist(data[:,9], 20, normed=0, weights=weights, facecolor='r', edgecolor = "none", alpha=0.75)
-ax14.set_xlabel('Conductance')
+ax14.set_xlabel('$G_{Kr}$')
 ax14.set_ylim([0., .2])
 #ax14.xaxis.set_major_formatter(FormatStrFormatter('%5.4g'))
 #ax14.set_xticklabels(ax14.xaxis.get_majorticklabels(), rotation=90)
@@ -237,6 +236,7 @@ axes_list = [ax6,ax7,ax8,ax9,ax10,ax11,ax12,ax13,ax14]
 for i in range(0,9):
     ax = axes_list[i]
     ax.locator_params(tight=True, nbins=5)
+    ax.tick_params(labelsize=12)
     #ax.xaxis.set_major_formatter(xfmt)
     ax.get_xaxis().get_major_formatter().set_useOffset(False)
     ax.get_xaxis().get_major_formatter().set_scientific(True)
@@ -244,12 +244,9 @@ for i in range(0,9):
     for label in ax.get_xticklabels():
         label.set_rotation(305)
         label.set_horizontalalignment("left")
-    print('Max posterior density for P',i+1,' is at', max_likelihood_values[i+1])
-    ax.plot(max_likelihood_values[i+1], 0, 'kx', markersize=10, markeredgewidth=3, clip_on=False)
-    if i==8:
-        ax.get_xaxis().set_label_coords(+0.5,0.93)
-    else:
-        ax.get_xaxis().set_label_coords(+0.1,0.93)
+    ax.plot(data[max_likelihood_index,i+1], 0, 'kx', markersize=10, markeredgewidth=3, clip_on=False)
+    ax.get_xaxis().set_label_coords(+0.22,0.86)
+    ax.xaxis.label.set_size(16)
 
 ########################################################
 # Add subfigure text labels, relative to axes top left

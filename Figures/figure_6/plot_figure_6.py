@@ -4,6 +4,11 @@ import numpy as np
 import numpy.random as npr
 import pandas as pd
 
+# These two lines let you use latex in text.
+import matplotlib as mpl
+mpl.style.use('classic') # Use Matplotlib v1 defaults (plot was designed on this!)
+mpl.rcParams['text.usetex'] = True
+
 # If you change the input data order or anything, then check line 113 (in which we ignore average cell conductance - as it is fitted
 # to currents all scaled to one particular cell).
 

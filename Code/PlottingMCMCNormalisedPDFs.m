@@ -6,15 +6,15 @@ function PlottingMCMCNormalisedPDFs()
 % We discard first 50,000 points in MCMC chain as burn
 
 cd ../MCMCResults
-chain_1 = importdata('MCMCChain_16713110_hh_sine_wave_3110140.mat');
-likelihood_1=importdata('MCMCLikelihood_16713110_hh_sine_wave_3110140.mat');
+chain_1 = importdata('MCMCChain_16713110_hh_sine_wave_30082148.mat');
+likelihood_1=importdata('MCMCLikelihood_16713110_hh_sine_wave_30082148.mat');
 
 [i,v]=max(likelihood_1);
 
 max_likelihood = chain_1(v,:);
 cd ..
 cd MCMCResultsSimulated
-chain_2 =importdata('MCMCChain_hh_sine_wave_20112341.mat');
+chain_2 =importdata('MCMCChain_hh_sine_wave_12092104.mat');
 cd ..
 % Discard first 50000 points are burn in
 chain_1=chain_1(50001:250000,:);

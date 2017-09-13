@@ -3,6 +3,10 @@ import matplotlib.gridspec as gridspec
 import matplotlib.patches as patches
 from matplotlib.ticker import FormatStrFormatter
 
+import matplotlib as mpl
+mpl.style.use('classic') # Use Matplotlib v1 defaults (plot was designed on this!)
+mpl.rc('text', usetex=True)
+
 from cycler import cycler
 import numpy
 from os.path import join, exists

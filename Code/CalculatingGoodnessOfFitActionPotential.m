@@ -209,12 +209,13 @@ JZ = sz.*IZ;
 IZ=JZ;
 
 % Calculate differences between cell-specific, literature and average model and experiment
-cell_specific_diff = sqrt((sum((E-I).^2))/length(I))
+cell_specific_diff = sum((sqrt((E-I).^2)))/length(I)
 
-average_diff = sqrt((sum((E-I_av).^2))/length(I_av))
+average_diff = sum((sqrt((E-I_av).^2)))/length(I_av)
 
-wang_diff =sqrt((sum((E-IW).^2))/length(IW))
-diveroli_diff  =sqrt((sum((E-ID).^2))/length(ID))
-mazhari_diff =sqrt((sum((E-IM).^2))/length(IM))
-tentusscher_diff =sqrt((sum((E-IT).^2))/length(IT))
-zeng_diff =sqrt((sum((E-IZ).^2))/length(IZ))
+wang_diff =sum((sqrt((E-IW).^2)))/length(IW)
+diveroli_diff  =sum((sqrt((E-ID).^2)))/length(ID)
+mazhari_diff =sum((sqrt((E-IM).^2)))/length(IM)
+tentusscher_diff =sum((sqrt((E-IT).^2)))/length(IT)
+zeng_diff =sum((sqrt((E-IZ).^2)))/length(IZ)
+cell_specific_part_diff=sum((sqrt((E(5702:73245)-I(5702:73245)).^2)))/length(I(5702:73245))
