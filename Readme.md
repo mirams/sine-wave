@@ -50,7 +50,7 @@ You should set up the below programs before attempting to run our code.
 
  * For simulations and calibration: [Matlab](https://www.mathworks.com/products/matlab.html) including [Mex](https://uk.mathworks.com/help/matlab/ref/mex.html) for using fast compiled C++ code.
  * [CVODE](http://computation.llnl.gov/projects/sundials/cvode) a C++ ODE solver that's great for stiff systems.
- * For plotting: [matplotlib v1.5.3](http://matplotlib.org/1.5.3/index.html) and [seaborn v0.7.1](http://seaborn.pydata.org/).
+ * For plotting: [matplotlib v2.0.2](http://matplotlib.org/2.0.2/index.html) and [seaborn v0.7.1](http://seaborn.pydata.org/).
 
 <a name="models"/>
 
