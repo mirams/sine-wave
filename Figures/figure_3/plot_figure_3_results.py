@@ -165,6 +165,13 @@ print('Maximum likelihood at index',max_likelihood_index)
 # Remove 'burn in'
 data = data[50001:,:]
 
+# Have a look at the parameter spreads as a proportion of the absolute values
+for param in range(1,10):
+    mean_param = numpy.mean(data[:,param])
+    std_param = numpy.std(data[:,param])
+    percent_of_mean = 100.0*std_param/mean_param
+    print('For parameter ', param, ' standard deviation is ', percent_of_mean, '% of the max posterior density value.')
+
 ax6 = fig.add_subplot(gs3[0,0])
 weights = numpy.ones_like(data[:,1])/float(len(data[:,1]))
 ax6.hist(data[:,1], 20, normed=0, weights=weights, facecolor='r', edgecolor = "none", alpha=0.75)
