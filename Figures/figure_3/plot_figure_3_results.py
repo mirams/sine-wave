@@ -157,13 +157,16 @@ gs3.update(wspace=0.07)
 ## Plot histograms
 ########################################################
 
-data = numpy.loadtxt('figure_3_c/MCMC_likelihood_and_samples.txt', skiprows=0)
-likelihoods = data[:,0]
+all_data = numpy.loadtxt('figure_3_c/MCMC_likelihood_and_samples.txt', skiprows=0)
+
+likelihoods = all_data[:,0]
 max_likelihood_index = numpy.argmax(likelihoods)
 print('Maximum likelihood at index',max_likelihood_index)
 
 # Remove 'burn in'
-data = data[50001:,:]
+data = all_data[50001:,:]
+
+
 
 # Have a look at the parameter spreads as a proportion of the absolute values
 for param in range(1,10):
@@ -251,7 +254,7 @@ for i in range(0,9):
     for label in ax.get_xticklabels():
         label.set_rotation(305)
         label.set_horizontalalignment("left")
-    ax.plot(data[max_likelihood_index,i+1], 0, 'kx', markersize=10, markeredgewidth=3, clip_on=False)
+    ax.plot(all_data[max_likelihood_index,i+1], 0, 'kx', markersize=10, markeredgewidth=3, clip_on=False)
     ax.get_xaxis().set_label_coords(+0.22,0.86)
     ax.xaxis.label.set_size(16)
 
