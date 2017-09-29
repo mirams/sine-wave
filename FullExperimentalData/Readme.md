@@ -2,7 +2,7 @@
 
 All the data (both raw and processed data used in this study) can be found on [Figshare](http://www.figshare.com) at https://doi.org/10.6084/m9.figshare.4702546.v1.
 The raw `.abf` files can be found in the `abf` folder for each cell. 
-(For an index as to which experiment set corresponds to which cell number in the paper see the index list in [Code/ExperimentalData](../Code/ExperimentalData)). 
+(For an index as to which experiment set corresponds to which cell number in the paper see the index list in [ExperimentalData/cell_index.txt](../ExperimentalData/cell_index.txt)). 
 The individual cell files each contain both plain text format data for each protocol as well as the leak subtracted and both leak and dofetilide subtracted traces. 
 We provide all the data for both the repeat of each protocol in control vehicle conditions and in the presence of dofetilide (as indicated by the inclusion of dofetilide after the protocol name for these files).
 
