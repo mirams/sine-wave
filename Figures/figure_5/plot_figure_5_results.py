@@ -12,214 +12,237 @@ import numpy
 from os.path import join, exists
 import re
 import sys
-import math
 plt.switch_backend('pdf')
+plt.tick_params(axis='both', which='minor', labelsize=16)
 
-voltage_file = 'figure_5_ap_protocol_data.txt'
-file = open(voltage_file, 'r')
-data = numpy.loadtxt(voltage_file, skiprows=0)
-all_time = data[:, 0]
-voltage = data[:,1]
+model_prediction_colour = [0,0.45,0.74]
 
-fig = plt.figure(0, figsize=(11.3,11.3), dpi=900)
+fig = plt.figure(0, figsize=(8,12), dpi=900)
 #fig.text(0.51, 0.9, r'{0}'.format('Title'), ha='center', va='center', fontsize=16)
 
-#gs = gridspec.GridSpec(4, 1, height_ratios=[3,5,4,4] )
-gs1 = gridspec.GridSpec(2, 1, height_ratios=[3,5],top=1.0,bottom=0.6,left=0.0,right=1.0 )
-gs2 = gridspec.GridSpec(3, 1, height_ratios=[1,2,2],top=0.55,bottom=0,left=0.0,right=1.0 )
+gs = gridspec.GridSpec(5, 3, height_ratios=[3,3,3,3,3], width_ratios=[1,1,1] )
 
-# Voltage trace
-ax1 = fig.add_subplot(gs1[0])
-plt.tick_params(axis='both', which='major', labelsize=16) # Seems to work on last created axes
-ax5 = fig.add_subplot(gs2[0])
-plt.tick_params(axis='both', which='major', labelsize=16)
-for ax in [ax1, ax5]:
-    #ax1.set_title('Summat', fontsize=14)
-    ax.set_ylabel('Voltage (mV)', fontsize=18)
-    #ax.set_xlabel('Time (s)', fontsize=14)
-    #ax1.set_xlabel('Time (s)')
-    plt.setp(ax.get_xticklabels(), visible=False)
-    
-    #ax1.set_yticklabels([r'$-10$', r'$-5$', r'$0$', r'$5$', r'$10$', r'$15$', r'$20$'])
-    #ax1.set_xticklabels([r'$10^{-3}$', r'$10^{-2}$', r'$10^{-1}$', r'$10^0$', r'$10^1$', r'$10^2$'])
-    ax.plot(all_time, voltage, color='k', lw=2)
+left_alignment_for_panel_label = -1.00
+protocol_names = ['steady_activation','inactivation','deactivation']
 
-ax1.set_xlim([0, 8])
-ax1.set_ylim([-130, 80])
+for column in range(0,3):
+    protocol = protocol_names[column]
 
-# To plot experimental data and then ours last, we re-order when we read in.
-model_prediction_columns = [8, 9, 10, 11, 7, 6]
-color_cycle = [[1,0,1], [0.47,0.67,0.19], 'c', [0.49,0.18,0.56],'DarkOrange','r',[0,0.45,0.74]]
-line_width_cycle = [1.5,1.5,1.5,1.5,1.5,1.,1.5]
+    # Plot voltage protocols
+    if column==0:
+        ax1 = plt.subplot(gs[0,column])
+        ax1_col0 = ax1
+        ax1.set_title('Steady Activation (Pr3)')
+    else:
+        ax1 = plt.subplot(gs[0,column], sharey=ax1_col0)
+        if column==1:
+            ax1.set_title('Inactivation (Pr4)')
+        elif column==2:
+            ax1.set_title('Deactivation (Pr5)')
 
-def get_filename(argument):
+    # Load voltage data
+    voltage_file = 'figure_5_' + protocol + '/' + 'figure_5_' + protocol + '_protocol.txt'
+    data = numpy.loadtxt(voltage_file, skiprows=0)
+    all_time = data[:, 0]
+    voltages = data[:,1:]
+    ax1.plot(all_time,voltages,'k-',lw=0.75)
+    ax1.set_xlabel('Time (s)', fontsize=12)
+    ax1.set_ylim([-130, 65])
+    ax1.set_xlim([0, numpy.amax(all_time)])
+
+    # Plot voltage protocols
+    ax2 = plt.subplot(gs[1,column])
+
+    # Experimental data
+    data_file = 'figure_5_' + protocol + '/' + 'figure_5_' + protocol + '_experiment.txt'
+    data = numpy.loadtxt(data_file, skiprows=0)
+    all_time = data[:, 0]
+    experimental_currents = data[:,1:]
+    ax2.plot(all_time,experimental_currents,'r-',lw=0.5)
+    ax2.set_xlabel('Time (s)', fontsize=12)
+
+    # Simulation
+    ax3 = plt.subplot(gs[2,column],sharex=ax2,sharey=ax2)
+    data_file = 'figure_5_' + protocol + '/' + 'figure_5_' + protocol + '_prediction.txt'
+    data = numpy.loadtxt(data_file, skiprows=0)
+    all_time = data[:, 0]
+    simulated_currents = data[:,1:]
+    ax3.plot(all_time,simulated_currents,'-',color=model_prediction_colour,lw=0.8)
+    ax3.set_xlabel('Time (s)', fontsize=12)
+
+    if column==0:
+        ax1.set_ylabel('Voltage\n(mV)', fontsize=14,rotation=0)
+        ax2.set_ylabel('Experimental\nCurrent (nA)', fontsize=14,rotation=0)
+        ax3.set_ylabel('Predicted\nCurrent (nA)', fontsize=14,rotation=0)
+        start_of_zoom_time = 0.6
+        length_of_zoom_time = 5.9
+        ax2.set_ylim([-1,2])
+    elif column==2:
+        start_of_zoom_time = 2.4
+        length_of_zoom_time = 5.6
+        ax2.set_ylim([-3.5,2])
+    elif column==1:
+        start_of_zoom_time = 1.2
+        length_of_zoom_time = 0.3
+        ax2.set_ylim([-5,10])
+        ax2.locator_params(axis='x', nbins=4)
+
+    ax2.set_xlim([start_of_zoom_time,start_of_zoom_time+length_of_zoom_time])
+
+    # Put a zoom section on
+    lower_voltage, tmp = ax1.get_ylim()
+    tmp, upper_v_time = ax1.get_xlim()
+    voltage_at_next_axes = -208
+
+    patch_vertices = numpy.array([[start_of_zoom_time,lower_voltage],
+                                  [0,voltage_at_next_axes],
+                                  [upper_v_time,voltage_at_next_axes],
+                                  [start_of_zoom_time+length_of_zoom_time,lower_voltage]])
+
+    ax1.add_artist(plt.Polygon(patch_vertices,
+                           closed=True,
+                           edgecolor="none",
+                           facecolor="grey",
+                           alpha=0.15,
+                           clip_on=False
+                           )
+               )
+
+    # Shift axis labels
+    axes_list = [ax1, ax2, ax3]
+    for ax in axes_list:
+        if column==0:
+            ax.get_yaxis().set_label_coords(-0.6,0.30)
+        ax.get_xaxis().set_label_coords(+0.5,-0.19)
+
+    if column == 0:
+        # Add subfigure text labels, relative to axes top left
+        ax1.text(left_alignment_for_panel_label, 1.05, 'A', verticalalignment='top', horizontalalignment='left', transform=ax1.transAxes, fontsize=20, fontweight='bold')
+        ax2.text(left_alignment_for_panel_label, 1.05, 'B', verticalalignment='top', horizontalalignment='left', transform=ax2.transAxes, fontsize=20, fontweight='bold')
+        ax3.text(left_alignment_for_panel_label, 1.05, 'C', verticalalignment='top', horizontalalignment='left', transform=ax3.transAxes, fontsize=20, fontweight='bold')
+
+
+# Probably easier just to plot all the summary graphs without looping!
+
+def get_model_name(argument):
     switcher = {
-        0: "figure_5_ap_tentusscher_prediction.txt",
-        1: "figure_5_ap_mazhari_prediction.txt",
-        2: "figure_5_ap_diveroli_prediction.txt",
-        3: "figure_5_ap_wang_prediction.txt",
-        4: "figure_5_ap_zeng_prediction.txt",
-        5: "figure_5_ap_experimental_data.txt",
-        6: "figure_5_ap_new_model_prediction.txt",
+        0: "tentusscher",
+        1: "mazhari",
+        2: "diveroli",
+        3: "wang",
+        4: "zeng",
+        5: "experiment",
+        6: "prediction",
     }
     return switcher.get(argument, "nothing")
 
-model_names = ['ten Tusscher','Mazhari','DiVeroli','Wang','Zeng','Experimental Data','New Model']
+color_cycle = [[1,0,1], [0.47,0.67,0.19], 'c', [0.49,0.18,0.56],'DarkOrange','r',model_prediction_colour]
+line_width_cycle = [0.5,0.5,0.5,0.5,0.5,2,2]
+line_style_cycle = ['-','-','-','-','-','--','-']
 
-for i in range(0,7):
-    file = open(get_filename(i), 'r')
-    data = numpy.loadtxt(get_filename(i), skiprows=0)
-    all_time = data[:,0]
-    if i == 0: # Set up an empty currents array
-        currents = numpy.zeros((len(all_time),7))
-    currents[:,i] = data[:,1]
+###########################
+# S.S. activation IV curve
+###########################
+ax4 = plt.subplot(gs[3,0])
 
-# Work out error measures
-fig2 = plt.figure(1, figsize=(8,11.3), dpi=900)
-gs3 = gridspec.GridSpec(6, 1)
-mean_error = numpy.empty(7)
-zeros = numpy.zeros(len(currents[:,0]))
-for i in [0,1,2,3,4,6]:
-    if i<6:
-        ax = fig2.add_subplot(gs3[i])
-    else:
-        ax = fig2.add_subplot(gs3[-1])
-        ax.set_xlabel('Time (s)')
-    error_measure = currents[:,i]-currents[:,5]
-    #ax.plot(all_time, error_measure, color='k', lw=1)
-    ax.fill_between(all_time,error_measure,zeros,lw=0,color=color_cycle[i])
-    ax.set_ylim([-0.6,0.6])
-    ax.set_title(model_names[i])
-    ax.set_ylabel('Error (nA)')
-    error_measure = numpy.sqrt(pow(error_measure,2))
-    mean_error[i] = numpy.mean(error_measure)
+###########################
+# S.S. activation tau curve - not plotting this as it isn't something usually seen!
+###########################
+#ax5 = plt.subplot(gs[4,0])
 
-for i in [0,1,2,3,4,6]:
-    print(model_names[i],' mean error = ',mean_error[i],' nA')
-    print(model_names[i],' percent increase over New Model Error = ',100*mean_error[i]/mean_error[6]-100,'%')
-plt.rc('text', usetex=True)
-plt.rc('font', family='serif')
-plt.tight_layout()
-plt.savefig('errors.pdf', bbox_inches='tight', dpi=900, pad_inches=0.05)
+###########################
+# deactivation - deactivation tau curve
+###########################
+ax6 = plt.subplot(gs[3,2])
 
-plt.figure(0)
-start_of_zoom_time = 3.
-length_of_zoom_time = 4.3
-lower_zoom_voltage = -90
-upper_zoom_voltage = 75
-lower_zoom_current = -0.02
-upper_zoom_current = 1.15
-ax5.set_xlim([start_of_zoom_time, start_of_zoom_time+length_of_zoom_time])
-ax5.set_ylim([lower_zoom_voltage, upper_zoom_voltage])
-ax5.locator_params(nbins=8,axis='y')
+###########################
+# deactivation - recovery from inactivtion tau curve
+###########################
+ax7 = plt.subplot(gs[4,2])
 
-ax1.add_patch(
-              patches.Rectangle(
-                                (start_of_zoom_time, lower_zoom_voltage),   # (x,y)
-                                length_of_zoom_time,          # width
-                                upper_zoom_voltage-lower_zoom_voltage, # height
-                                edgecolor="none",
-                                facecolor="grey",
-                                alpha=0.2,
-                                clip_on=False
-                                )
-              )
+###########################
+# inactivtion- instantaneous inactivation tau curve
+###########################
+ax8 = plt.subplot(gs[3,1])
 
-# Current trace
-ax2 = fig.add_subplot(gs1[1])
-#ax2.set_title('Summat', fontsize=14)
-ax2.set_xlim([0, 8])
-ax2.set_ylim([-2, 3])
-ax2.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
-ax2.add_patch(
-              patches.Rectangle(
-                                (start_of_zoom_time, lower_zoom_current),   # (x,y)
-                                length_of_zoom_time,          # width
-                                upper_zoom_current-lower_zoom_current,          # height
-                                edgecolor="none",
-                                facecolor="grey",
-                                alpha=0.2,
-                                clip_on=False
-                                )
-              )
-ax2.plot(all_time, currents[:,5],color='r',lw=1)
-ax2.plot(all_time, currents[:,6],color=[0,0.45,0.74], lw=1.5)
-ax2.set_ylabel('Current (nA)', fontsize=18)
-ax2.set_xlabel('Time (s)', fontsize=18)
+legend_entry = []
 
-# Add zoomy shading bit
-patch_vertices = numpy.array([[start_of_zoom_time,-2.0],[0,-2.96],[8,-2.96],[start_of_zoom_time+length_of_zoom_time,-2.0]])
+for model_idx in range(0,7):
+    file_name = 'figure_5_steady_activation/figure_5_steady_activation_iv_curve/figure_5_steady_activation_iv_' + get_model_name(model_idx) +'.txt'
+    data = numpy.loadtxt(file_name,skiprows=0)
+    ax4.plot(data[:,0],data[:,1],'.'+line_style_cycle[model_idx],color=color_cycle[model_idx],lw=line_width_cycle[model_idx])
+    
+#    file_name = 'figure_5_steady_activation/figure_5_steady_activation_tau_v_curve/figure_5_steady_activation_tau_v_' + get_model_name(model_idx) +'.txt'
+#    data = numpy.loadtxt(file_name,skiprows=0)
+#    ax5.semilogy(data[:,0],data[:,1],'.'+line_style_cycle[model_idx],color=color_cycle[model_idx],lw=line_width_cycle[model_idx])
 
-polygon_zooming = plt.Polygon(patch_vertices,
-                              closed=True,
-                              edgecolor="none",
-                              facecolor="grey",
-                              alpha=0.15,
-                              clip_on=False
-                              )
-ax2.add_artist(polygon_zooming)
-plt.tick_params(axis='both', which='major', labelsize=16)
+    file_name = 'figure_5_deactivation/figure_5_deactivation_tau_v/figure_5_deactivation_tau_v_' + get_model_name(model_idx) +'.txt'
+    data = numpy.loadtxt(file_name,skiprows=0)
+    [a] = ax6.semilogy(data[:,0],data[:,1],'.'+line_style_cycle[model_idx],color=color_cycle[model_idx],lw=line_width_cycle[model_idx])
+    legend_entry.append(a)
+    
+    # Don't plot inactivation or instantaneous inactivation tau curves for TT or Zeng, simulated curves not comparable.
+    if (get_model_name(model_idx) != "tentusscher") and (get_model_name(model_idx) != "zeng"):
+        file_name = 'figure_5_inactivation/figure_5_instantaneous_inactivation_tau/figure_5_instantaneous_inactivation_tau_v_' + get_model_name(model_idx) +'.txt'
+        data = numpy.loadtxt(file_name,skiprows=0)
+        ax8.plot(data[:,0],data[:,1],'.'+line_style_cycle[model_idx],color=color_cycle[model_idx],lw=line_width_cycle[model_idx])
+
+    if (get_model_name(model_idx) != "tentusscher") and (get_model_name(model_idx) != "zeng"):
+        file_name = 'figure_5_deactivation/figure_5_inactivation_tau_v/figure_5_inactivation_tau_v_' + get_model_name(model_idx) +'.txt'
+        data = numpy.loadtxt(file_name,skiprows=0)
+        ax7.plot(data[:,0],data[:,1],'.'+line_style_cycle[model_idx],color=color_cycle[model_idx],lw=line_width_cycle[model_idx])
 
 
+ax4.set_xlabel('Voltage (mV)', fontsize=12)
+ax4.set_ylabel('Current\n(normalized)', fontsize=12)
+ax4.get_yaxis().set_label_coords(-0.26,0.5)
+ax4.get_xaxis().set_label_coords(0.5,-0.19)
+
+#ax5.set_xlabel('Voltage (mV)', fontsize=12)
+#ax5.set_ylabel(r'Time constant $\tau$ (ms)', fontsize=12)
+#ax5.set_ylim([8,10000])
+#ax5.get_yaxis().set_label_coords(-0.3,0.4)
+#ax5.get_xaxis().set_label_coords(0.5,-0.19)
+
+ax6.set_xlabel('Voltage (mV)', fontsize=12)
+ax6.set_ylabel(r'Deactivation $\tau$ (ms)', fontsize=12)
+ax6.get_yaxis().set_label_coords(-0.16,0.5)
+ax6.set_ylim([1,4000])
+ax6.get_xaxis().set_label_coords(0.5,-0.19)
+
+ax7.set_xlabel('Voltage (mV)', fontsize=12)
+ax7.set_ylabel(r'Recovery inact. $\tau$ (ms)', fontsize=12)
+ax7.get_yaxis().set_label_coords(-0.16,0.4)
+ax7.get_xaxis().set_label_coords(0.5,-0.19)
+
+ax8.set_xlabel('Voltage (mV)', fontsize=12)
+ax8.set_ylabel(r'Inactivation $\tau$ (ms)', fontsize=12)
+ax8.get_yaxis().set_label_coords(-0.16,0.5)
+ax8.get_xaxis().set_label_coords(0.5,-0.19)
+ax8.set_xlim([-50, 50])
+
+ax6.locator_params(axis='x', nbins=4)
+ax7.locator_params(axis='x', nbins=4)
+ax7.locator_params(axis='y', nbins=6)
+#ax5.locator_params(axis='y', nbins=6)
+ax8.locator_params(axis='y', nbins=6)
 
 
-# Current zoom trace
-ax3 = fig.add_subplot(gs2[1])
-#ax.set_title('Summat', fontsize=14)
-ax3.set_ylabel('Current (nA)', fontsize=18)
-#ax3.set_xlabel('Time (s)', fontsize=16)
-ax3.set_xlim([start_of_zoom_time, start_of_zoom_time+length_of_zoom_time])
-ax3.set_ylim([lower_zoom_current, upper_zoom_current])
-#ax3.set_prop_cycle(cycler('color',color_cycle[:,4:5]) + cycler('lw',line_width_cycle[:,4:5]))
-ax3.plot(all_time, currents[:,5],color='r',lw=1)
-[g] = ax3.plot(all_time, currents[:,6],color=[0,0.45,0.74], lw=1.5)
-plt.setp(ax3.get_xticklabels(), visible=False)
-plt.tick_params(axis='both', which='major', labelsize=16)
+ax4.text(-130, -0.4, 'Summary\nPlots', ha='center', fontsize=14)
 
-# Current zoom trace
-ax4 = fig.add_subplot(gs2[2])
-#ax.set_title('Summat', fontsize=14)
-ax4.set_ylabel('Current (nA)', fontsize=18)
-ax4.set_xlabel('Time (s)', fontsize=18)
-ax4.set_xlim([start_of_zoom_time, start_of_zoom_time+length_of_zoom_time])
-ax4.set_ylim([lower_zoom_current, upper_zoom_current])
-ax4.set_prop_cycle(cycler('color',color_cycle) + cycler('lw',line_width_cycle))
-[a,b,c,d,e,f] = ax4.plot(all_time, currents[:,[0,1,2,3,4,5]])
 
-# Squeeze the voltage and current plots together
-gs1.update(hspace=0.0)
-gs2.update(hspace=0.0)
+ax7.legend(legend_entry, ["ten Tusscher `04","Mazhari `01","Di Veroli `13","Wang `97","Zeng `95","Experiment", "New model"], title="Legend", bbox_to_anchor=(-2.7, 0, 2.35, 1.5), loc='lower left', handletextpad=0.5,borderpad=0.5,labelspacing=0.35,columnspacing=4.5, ncol=2, borderaxespad=0.,fontsize=12)
 
-ax4.legend([a,b,c,d,e,f], ["ten Tusscher `04","Mazhari `01","Di Veroli `13","Wang `97","Zeng `95","Experiment"], bbox_to_anchor=(0., -0.42, 1., .102), loc=8, handletextpad=0.05,columnspacing=1.0,
-           ncol=6, mode="expand", borderaxespad=0.,prop={'size':17})
 
-ax2.legend([f,g], ["Experiment","New model prediction"], loc=8, handletextpad=0.1, columnspacing=1,
-           ncol=2, borderaxespad=1.0,prop={'size':18})
+ax4.text(left_alignment_for_panel_label, 1.05, 'D', verticalalignment='top', horizontalalignment='left',
+         transform=ax4.transAxes,fontsize=20, fontweight='bold')
 
-x_text = -0.1
-y_text = 1.01
-
-# Line up y labels
-for ax in [ax1, ax2, ax3, ax4, ax5]:
-    ax.yaxis.set_label_coords(-0.045, 0.5)
-
-# Add subfigure text labels, relative to axes top left
-ax1.text(x_text, y_text, 'A', verticalalignment='top', horizontalalignment='left',
-         transform=ax1.transAxes,fontsize=23, fontweight='bold')
-ax2.text(x_text, y_text, 'B', verticalalignment='top', horizontalalignment='left',
-         transform=ax2.transAxes,fontsize=23, fontweight='bold')
-ax5.text(x_text, y_text, 'C', verticalalignment='top', horizontalalignment='left',
-         transform=ax5.transAxes,fontsize=23, fontweight='bold')
-ax3.text(x_text, y_text, 'D', verticalalignment='top', horizontalalignment='left',
-         transform=ax3.transAxes,fontsize=23, fontweight='bold')
-ax4.text(x_text, y_text, 'E', verticalalignment='top', horizontalalignment='left',
-         transform=ax4.transAxes,fontsize=23, fontweight='bold')
-
+#legend = ax4.legend(loc='center', shadow=False)
+gs.update(wspace=0.35, hspace=0.4)
 #fig.set_tight_layout(True)
 #gs.tight_layout(fig, renderer=None, pad=0, h_pad=None, w_pad=None, rect=None)
 #plt.tight_layout()
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
-plt.tick_params(axis='both', which='major', labelsize=16)
+plt.subplots_adjust(top=0.75, wspace=0.25)
 plt.savefig('figure_5.pdf', bbox_inches='tight', dpi=900, pad_inches=0.05)
-
