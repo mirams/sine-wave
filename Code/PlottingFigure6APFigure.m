@@ -1,5 +1,5 @@
-function PlottingFigure5APFigure()
-% This script produces the data used to plot Figure 5
+function PlottingFigure6APFigure()
+% This script produces the data used to plot Figure 6
 %Simulates response to action potential waveform protocol for literature models and new model (with best fitting parameters to sine wave for cell 5)
 % and compares with experimental recording from cell 5
 
@@ -137,7 +137,7 @@ JZ = sz.*IZ;
 IZ=JZ;
 
 % Prepare and save data
-cd ../Figures/figure_5
+cd ../Figures/figure_6
 wang_data=[[0:0.0001:(length(V)/10000)-0.0001]',IW];
 diveroli_data=[[0:0.0001:(length(V)/10000)-0.0001]',ID];
 mazhari_data=[[0:0.0001:(length(V)/10000)-0.0001]',IM];
@@ -146,14 +146,14 @@ zeng_data=[[0:0.0001:(length(V)/10000)-0.0001]',IZ];
 new_model_data=[[0:0.0001:(length(V)/10000)-0.0001]',I];
 experimental_data=[[0:0.0001:(length(V)/10000)-0.0001]',E];
 protocol_data=[[0:0.0001:(length(V)/10000)-0.0001]',V];
-save figure_5_ap_wang_prediction.txt wang_data -ascii
-save figure_5_ap_diveroli_prediction.txt diveroli_data -ascii
-save figure_5_ap_mazhari_prediction.txt mazhari_data -ascii
-save figure_5_ap_tentusscher_prediction.txt tentusscher_data -ascii
-save figure_5_ap_zeng_prediction.txt zeng_data -ascii
-save figure_5_ap_new_model_prediction.txt new_model_data -ascii
-save figure_5_ap_experimental_data.txt experimental_data -ascii
-save figure_5_ap_protocol_data.txt protocol_data -ascii
+save figure_6_ap_wang_prediction.txt wang_data -ascii
+save figure_6_ap_diveroli_prediction.txt diveroli_data -ascii
+save figure_6_ap_mazhari_prediction.txt mazhari_data -ascii
+save figure_6_ap_tentusscher_prediction.txt tentusscher_data -ascii
+save figure_6_ap_zeng_prediction.txt zeng_data -ascii
+save figure_6_ap_new_model_prediction.txt new_model_data -ascii
+save figure_6_ap_experimental_data.txt experimental_data -ascii
+save figure_6_ap_protocol_data.txt protocol_data -ascii
 cd ..
 cd ..
 cd Code

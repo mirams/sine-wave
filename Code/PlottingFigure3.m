@@ -1,5 +1,5 @@
-function PlottingFigure2()
-% This script produces the data to plot Figure 2, which is then used in Figures/figure_2/plot_figure_2_results.py to plot the figure
+function PlottingFigure3()
+% This script produces the data to plot Figure 3, which is then used in Figures/figure_3/plot_figure_3_results.py to plot the figure
 % Plots sine wave voltage protocol, simulations in response to sine wave protocol from each literature model and experimental recordings from sine wave protocol
 protocol='sine_wave';
 temperature = 21.5; % Temperature corresponds to mean of experiment temperatures
@@ -47,9 +47,9 @@ for j = 2:N
 end
 
 
-cd ../Figures/figure_2/figure_2_data
+cd ../Figures/figure_3/figure_3_data
 model_data=[[0:0.0001:(length(V)/10000)-0.0001]',J];
-save figure_2_sine_wave_model_data.txt model_data -ascii
+save figure_3_sine_wave_model_data.txt model_data -ascii
 cd ..
 cd ..
 cd ..
@@ -101,16 +101,16 @@ for j = 1:numel(files)
 end
 cd ..
 cd ..
-cd Figures/figure_2/figure_2_data
+cd Figures/figure_3/figure_3_data
 experimental_data=[[0:0.0001:(length(V)/10000)-0.0001]',J];
-save figure_2_sine_wave_experimental_data.txt experimental_data -ascii
+save figure_3_sine_wave_experimental_data.txt experimental_data -ascii
 cd ..
 cd ..
 cd ..
 
-cd Figures/figure_2/figure_2_data
+cd Figures/figure_3/figure_3_data
 protocol_data=[[0:0.0001:(length(V)/10000)-0.0001]',V];
-save figure_2_sine_wave_protocol.txt protocol_data -ascii
+save figure_3_sine_wave_protocol.txt protocol_data -ascii
 cd ..
 cd ..
 cd ..

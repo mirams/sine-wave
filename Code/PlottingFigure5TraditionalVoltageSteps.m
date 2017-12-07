@@ -1,6 +1,6 @@
-function PlottingFigure4TraditionalVoltageSteps()
+function PlottingFigure5TraditionalVoltageSteps()
 close all
-% This script produces the data to plot Figure 4, which is then used in Figures/figure_4/plot_figure_4_results.py to plot the figure
+% This script produces the data to plot Figure 5, which is then used in Figures/figure_5/plot_figure_5_results.py to plot the figure
 % Plots protocols, model simulations and experimental recordings for cell 5 for steady state activation, inactivation and deactivation protoocols
 % and also plot the summary data curves in the form of current-voltage and time constant-voltage relationships for these protocols.
 
@@ -48,10 +48,10 @@ for i=1:16
     inactivation_prediction_data(:,i+1) = I(1+(i-1)*l:i*l);
     
 end
-cd ../Figures/figure_4/figure_4_inactivation/
-save figure_4_inactivation_prediction.txt inactivation_prediction_data -ascii
-save figure_4_inactivation_experiment.txt inactivation_experimental_data -ascii
-save figure_4_inactivation_protocol.txt inactivation_protocol_data -ascii
+cd ../Figures/figure_5/figure_5_inactivation/
+save figure_5_inactivation_prediction.txt inactivation_prediction_data -ascii
+save figure_5_inactivation_experiment.txt inactivation_experimental_data -ascii
+save figure_5_inactivation_protocol.txt inactivation_protocol_data -ascii
 cd ..
 cd ..
 cd ..
@@ -93,10 +93,10 @@ for i=1:9
     
 end
 % Save data
-cd ../Figures/figure_4/figure_4_deactivation
-save figure_4_deactivation_prediction.txt deactivation_prediction_data -ascii
-save figure_4_deactivation_experiment.txt deactivation_experimental_data -ascii
-save figure_4_deactivation_protocol.txt deactivation_protocol_data -ascii
+cd ../Figures/figure_5/figure_5_deactivation
+save figure_5_deactivation_prediction.txt deactivation_prediction_data -ascii
+save figure_5_deactivation_experiment.txt deactivation_experimental_data -ascii
+save figure_5_deactivation_protocol.txt deactivation_protocol_data -ascii
 cd ..
 cd ..
 cd ..
@@ -135,10 +135,10 @@ for i=1:7
     steady_activation_prediction_data(:,i+1) = I(1+(i-1)*l:i*l);
 end
 %Save data
-cd ../Figures/figure_4/figure_4_steady_activation
-save figure_4_steady_activation_prediction.txt steady_activation_prediction_data -ascii
-save figure_4_steady_activation_experiment.txt steady_activation_experimental_data -ascii
-save figure_4_steady_activation_protocol.txt steady_activation_protocol_data -ascii
+cd ../Figures/figure_5/figure_5_steady_activation
+save figure_5_steady_activation_prediction.txt steady_activation_prediction_data -ascii
+save figure_5_steady_activation_experiment.txt steady_activation_experimental_data -ascii
+save figure_5_steady_activation_protocol.txt steady_activation_protocol_data -ascii
 cd ..
 cd ..
 cd ..
