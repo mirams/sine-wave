@@ -190,7 +190,7 @@ steady_activation_iv_prediction_data(:,2) =S./max(S);
 steady_activation_iv_average_data(:,1) =V;
 steady_activation_iv_average_data(:,2)=SA./max(SA);
 
-cd ../Figures/figure_6/steady_act_predictions
+cd ../Figures/figure_7/steady_act_predictions
 save(['steady_act_peak_hh_',exp_ref,'.txt'],'steady_activation_iv_prediction_data','-ascii')
 save(['steady_act_peak_hh_',exp_ref,'_average.txt'],'steady_activation_iv_average_data','-ascii')
 cd ..
