@@ -14,7 +14,7 @@ plt.switch_backend('pdf')
 plt.tick_params(axis='both', which='minor', labelsize=16)
 plt.tick_params(axis='both', which='major', labelsize=16)
 
-fig = plt.figure(0, figsize=(8,8), dpi=900)
+fig = plt.figure(0, figsize=(8,7), dpi=900)
 
 models = ['mazhari',
           'aslanidi',
@@ -175,10 +175,10 @@ for experiment in ['a','b','c']:
 # Reduce number of ticks on single AP plot
 ax5.set_xticks([0,100,200,300])
 ax1.set_yticks([-80,-40,0,40])
-ax4.set_yticks([0,10,20,30,40])
-ax7.set_yticks([0,10,20,30,40])
-ax10.set_yticks([0,10,20,30,40])
-ax13.set_yticks([0,10,20,30,40])
+ax4.set_yticks([0,10,20,30])
+ax7.set_yticks([0,10,20,30])
+ax10.set_yticks([0,10,20,30])
+ax13.set_yticks([0,10,20,30])
 
 ax1.set_xlim([0, 10.5])
 ax2.set_xlim([0, 350])
