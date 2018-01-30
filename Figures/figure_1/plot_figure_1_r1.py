@@ -46,11 +46,12 @@ models = ['mazhari',
           'zhang',
           'matsuoka']
 
-guinea_pigs = ['zeng','winslow','clancy','lindblad','matsuoka']
-human_vent = ['lindblad','ohara','tentusscher','grandi','seeman','priebe']
-rabbit_san = ['lindblad','zhang','kurata','oehmen','matsuoka']
+#guinea_pigs = ['zeng','clancy','matsuoka']
+dogs = ['fox','hund','aslanidi','winslow']
+human_vent = ['priebe','tentusscher','fink','grandi','ohara','seemann']
+rabbit_san = ['zhang','kurata','oehmen','severi']
 expression_room = ['wang','diveroli_rt']
-expression_37 = ['diveroli_pt','fink','nygren','mazhari','tentusscher','lu']
+expression_37 = ['diveroli_pt','mazhari','lu']
 
 ########################################################
 ## Full plot of sine wave voltage protocol and current
@@ -104,7 +105,7 @@ for experiment in ['a','b','c']:
         for m in models:
             current_file = 'figure_1_' + experiment + '_data/figure_1_' +experiment+ '_' + m + '.txt'
             data = numpy.loadtxt(current_file, skiprows=0)
-            if m in guinea_pigs:
+            if m in dogs:
                 ax4.plot(times_seconds,data)
             else:
                 ax4.plot(times_seconds,data,'k-',alpha=alpha_level)
@@ -129,7 +130,7 @@ for experiment in ['a','b','c']:
         for m in models:
             current_file = 'figure_1_' + experiment + '_data/figure_1_' +experiment+ '_' + m + '.txt'
             data = numpy.loadtxt(current_file, skiprows=0)
-            if m in guinea_pigs:
+            if m in dogs:
                 ax5.plot(time_range,data)
             else:
             	ax5.plot(time_range,data,'k-',alpha=alpha_level)
@@ -153,7 +154,7 @@ for experiment in ['a','b','c']:
         for m in models:
             current_file = 'figure_1_' + experiment + '_data/figure_1_' +experiment+ '_' + m + '.txt'
             data = numpy.loadtxt(current_file, skiprows=0)
-            if m in guinea_pigs:
+            if m in dogs:
                 ax6.plot(time_range,data)
             else:
                 ax6.plot(time_range,data,'k-',alpha=alpha_level)
