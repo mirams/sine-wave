@@ -119,9 +119,8 @@ s_av = v*0.01+0.000001;
 
 J_av = s_av.*I_av;
 I_av=J_av;
-
 % Capacitive spikes removed from average sine wave scaled simulated trace
-K_av = [I_av(1:2499);I_av(2549:2999);I_av(3049:4999);I_av(5049:14999);I_av(15049:19999);I_av(20049:29999);I_av(30049:64999);I_av(65049:69999);I_av(700049:end)];
+K_av = [I_av(1:2499);I_av(2549:2999);I_av(3049:4999);I_av(5049:14999);I_av(15049:19999);I_av(20049:29999);I_av(30049:64999);I_av(65049:69999);I_av(70049:end)];
 
 % Scale literature models to minimise square difference between simulation and experiment exp_ref action potential recording
 %Wang model
