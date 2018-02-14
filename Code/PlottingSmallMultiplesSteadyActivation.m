@@ -27,7 +27,7 @@ exp_16708118= [0.0356,0.06,0.1799,0.3834,0.4283,0.4343,0.4459];
 
 exp_16708060= [0.0387,0.0555,0.3067,0.6727,0.7875,0.7973,0.8142];
 
-cd Figures/figure_6/steady_act_predictions
+cd Figures/figure_7/steady_act_predictions
 
 % Import peak current data for simulations as calculated from running the matlab script PlottingSteadyActivationPeakCurrentCurves6b.m.
 sim_16713110 = importdata('steady_act_peak_hh_16713110.txt');
@@ -50,7 +50,7 @@ exp=[exp_16713003',exp_16715049',exp_16708016',exp_16708060',exp_16713110',exp_1
 sim=[sim_16713003(:,2),sim_16715049(:,2),sim_16708016(:,2),sim_16708060(:,2),sim_16713110(:,2),sim_16708118(:,2),sim_16704007(:,2),sim_16704047(:,2),sim_16707014(:,2)];
 
 % Prepare and save data
-cd steady_activation_peak_current_figure_6_b
+cd steady_activation_peak_current_figure_7_b
 
 cell_1_16713003_exp_data = [V(:),exp(:,1)./max(exp(:,1))];
 cell_2_16715049_exp_data = [V(:),exp(:,2)./max(exp(:,2))];
