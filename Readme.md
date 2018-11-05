@@ -1,5 +1,8 @@
 # Sinusoidal voltage protocols for rapid characterization of ion channel kinetics: Supplementary Data
 
+This is code associated with the paper:  
+Beattie, K. A., Hill, A. P., Bardenet, R., Cui, Y., Vandenberg, J. I., Gavaghan, D. J., de Boer, T. P. & Mirams, G. R. [Sinusoidal voltage protocols for rapid characterisation of ion channel kinetics](https://doi.org/10.1113/JP275733). J. Physiol. 596, 1813–1828 (2018).
+
 In this readme we detail the contents of this Supplementary Data repository. 
 We'll explain how all the scripts in this folder are used to generate the results in the paper, and which scripts are used to collate and plot the data for each figure.
 
