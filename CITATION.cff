@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Beattie"
+  given-names: "Kylie A."
+  orcid: "https://orcid.org/0000-0002-8579-6321"
+- family-names: "Mirams"
+  given-names: "Gary R."
+  orcid: "https://orcid.org/0000-0002-4569-4312"
+title: "Code for Sinusoidal Protocols for hERG model fitting"
+version: 1.0.0
+doi: 10.5281/zenodo.998710
+date-released: 2017-09-28
+url: "https://github.com/mirams/sine-wave"
+
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Beattie"
+    given-names: "Kylie A."
+    orcid: "https://orcid.org/0000-0002-8579-6321"
+  - family-names: "Hill"
+    given-names: "Adam P."
+  - family-names: "Bardenet"
+    given-names: "Remi"
+  - family-names: "Cui"
+    given-names: "Yi"
+  - family-names: "Vandenberg"
+    given-names: "Jamie I."
+  - family-names: "Gavaghan"
+    given-names: "David J."
+  - family-names: "Boer"
+    name-particle: "de"
+    given-names: "Teun P."
+  - family-names: "Mirams"
+    given-names: "Gary R."
+    orcid: "https://orcid.org/0000-0002-4569-4312"
+  doi: "10.1113/JP275733"
+  journal: "Journal of Physiology"
+  start: 1813 # First page number
+  end: 1828 # Last page number
+  title: "Sinusoidal voltage protocols for rapid characterization of ion channel kinetics"
+  issue: 10
+  volume: 596
+  year: 2018
